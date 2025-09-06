@@ -8,7 +8,7 @@ def portfolio_cost(filename):
     records = report.read_portfolio(filename)
     pcost = 0
     for record in records:
-        pcost += record.cost()
+        pcost += record.cost
     # for rowno, row in enumerate(rows, start=1):
     #     try:
     #         shares = int(row[1])
