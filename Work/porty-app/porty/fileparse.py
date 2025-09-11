@@ -2,7 +2,9 @@
 #
 # Exercise 3.3
 import csv
-
+import logging
+# logging.basicConfig(level=logging.DEBUG)
+log = logging.getLogger(__name__)
 def parse_csv(lines, select=None, types=None, has_headers=True, delimiter=',', silence_errors=False):
     '''
     Parse a file like object into a list of records
@@ -38,8 +40,10 @@ def parse_csv(lines, select=None, types=None, has_headers=True, delimiter=',', s
                 if silence_errors:
                     continue
                 else:
-                    print(f"Row {index}: Couldn't convert {row}")
-                    print(f"Row {index}: Reason {e}")
+                    log.warning("Row %d: Couldn't convert %s", index, row)
+                    log.debug("Row %d: Reason %s", index, e)
+                    # print(f"Row {index}: Couldn't convert {row}")
+                    # print(f"Row {index}: Reason {e}")
 
         if has_headers:
             record = dict(zip(headers, row))

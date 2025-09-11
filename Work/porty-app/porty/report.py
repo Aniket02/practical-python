@@ -1,15 +1,16 @@
 # report.py
 #
 # Exercise 2.4
-from fileparse import parse_csv
-import stock
-import tableformat
+from .fileparse import parse_csv
+from . import tableformat
+from .portfolio import Portfolio
 
-def read_portfolio(filename):
+
+def read_portfolio(filename, **opts):
     '''Create a list of dictionaries from a portfolio file'''
     with open(filename) as f:
-        records = parse_csv(f, types=[str, int, float])
-        return [stock.Stock(r["name"], r["shares"], r["price"]) for r in records]
+        port = Portfolio.from_csv(f)
+        return port
 
 def read_prices(filename):
     '''Create a dictionary of prices from a price file'''
@@ -55,6 +56,12 @@ def main(argv):
 
 if __name__ == '__main__':
     import sys
+    import logging
+    logging.basicConfig(
+        filename = 'app.log',            # Name of the log file (omit to use stderr)
+        filemode = 'w',                  # File mode (use 'a' to append)
+        level    = logging.DEBUG,      # Logging level (DEBUG, INFO, WARNING, ERROR, or CRITICAL) 
+    )
     main(sys.argv)
 
 # portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
